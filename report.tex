@@ -1,0 +1,104 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[utf8]{vietnam}
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{relsize}
+\usepackage[left=3cm, right=2.00cm, top=2.00cm, bottom=2.00cm]{geometry}
+\lstset{
+   %keywords={break,case,catch,continue,else,elseif,end,for,function,
+   %   global,if,otherwise,persistent,return,switch,try,while},
+   basicstyle=\ttfamily \fontsize{12}{15}\selectfont,   
+	% numbers=left,
+   frame=lrtb,
+tabsize=2
+}
+\usepackage{hyperref}  
+\usepackage{float}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\usepackage[nottoc]{tocbibind}
+\usepackage[english]{babel}
+\addto\captionsenglish{%
+ \renewcommand\chaptername{Phần}
+ \renewcommand{\contentsname}{Mục lục} 
+ \renewcommand{\listtablename}{Danh sách bảng}
+ \renewcommand{\listfigurename}{Danh sách hình vẽ}
+ \renewcommand{\tablename}{Bảng}
+ \renewcommand{\figurename}{Hình}
+}
+\begin{document}
+\thispagestyle{empty}
+\thisfancypage{
+\setlength{\fboxrule}{1pt}
+\doublebox}{}
+\begin{center}
+{\fontsize{16}{19}\fontfamily{cmr}\selectfont TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI\\
+VIỆN CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG}\\
+\textbf{------------*******---------------}\\[1cm]
+\includegraphics[scale=0.13]{hust.jpg}\\[1.3cm]
+
+{\fontsize{32}{43}\fontfamily{cmr}\selectfont BÁO CÁO}\\[0.1cm]
+{\fontsize{38}{45}\fontfamily{cmr}\fontseries{b}\selectfont MÔN HỌC}\\[0.2cm]
+{\fontsize{19}{20}\fontfamily{phv}\selectfont Học máy }\\[0.2cm]
+{\fontsize{13}{20}\fontfamily{cmr}\selectfont Đề tài: So sánh thử nghiệm các phương pháp học máy\\ cho bài toán phân loại ảnh.
+}\\[2.5cm]
+\end{center}
+\hspace{1cm}\fontsize{14}{16}\fontfamily{cmr}\selectfont \textbf{Nhóm sinh viên thực hiện:}
+
+\begin{longtable}{l c c}
+
+Họ và tên & MSSV  & Lớp\\
+Nguyễn Tuấn Đạt & 20130856 & CNTT2.02-K58 \\
+Vũ Minh Đức & 20130856 & CNTT2.02-K58 \\
+Nguyễn Ngọc Huyền & 20130856 & CNTT2.02-K58 \\
+Đặng Quang Trung & 20130856 & CNTT2.02-K58 \\
+Phan Anh Tú & 20130856 & CNTT2.02-K58 \\
+
+\end{longtable}
+
+\hspace{1cm}\fontsize{14}{16}\fontfamily{cmr}\selectfont \textbf{Giáo viên hướng dẫn: }TS.Thân Quang Khoát \\[1.5cm]
+\begin{center}
+\fontsize{16}{19}\fontfamily{cmr}\selectfont Hà Nội 12--2016
+
+\end{center}
+\newpage
+\pdfbookmark{\contentsname}{toc}
+\tableofcontents
+\chapter*{Lời cảm ơn}
+\phantomsection
+\addcontentsline{toc}{chapter}{Lời cảm ơn}
+
+\listoffigures
+\chapter{Mở đầu}
+\chapter{Giới thiệu bài toán}
+\section{Giới thiệu bài toán}
+\section{Bộ dữ liệu sử dụng}
+\chapter{Các phương pháp sử dụng và kết quả thực nghiệm}
+\section{KNN}
+\subsection{Cơ sở lý thuyết}
+\subsection{Cài đặt}
+(ghi chú: cần nêu rõ cấu trúc mã nguồn, chương trình, vai trò của các lớp và các phương thức chính)
+
+\subsection{Kết quả}
+\section{Mạng neural}
+\section{CNN}
+\section{SVM}
+\chapter{Kết luận}
+\section{So sánh các phương pháp}
+\section{Khó khăn gặp phải}
+\section{Kinh nghiệm rút ra được}
+\chapter{Tài liệu tham khảo}
+\begin{verbatim}
+[+] https://
+
+\end{verbatim}
+
+
+\end{document}
