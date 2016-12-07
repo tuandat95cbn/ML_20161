@@ -228,7 +228,68 @@ $L = -\frac{1}{N}\Sigma_{i=1}^{N}\big[y_i\log y_i + (1-\tilde{y_i})\big]$ (c là
 \end{center}
 \end{figure}
 \subsection{Mạng CNN Lớn}
+\subsubsection{Cấu trúc mạng}
+{\small
+$\textbf{INPUT} \rightarrow \textbf{CONV} \rightarrow \textbf{RELU} \rightarrow \textbf{DropOut} \rightarrow \big[\textbf{CONV} \rightarrow \textbf{RELU} \rightarrow \textbf{POOL\big]*2} \rightarrow \textbf{DropOut} \rightarrow \textbf{CONV} \rightarrow \textbf{RELU} \rightarrow \textbf{POOL} \rightarrow \textbf{FLatten} \big[\textbf{DropOut} \rightarrow \textbf{Fully-connect(RELU)\big]*2}\rightarrow \textbf{DropOut} \rightarrow \textbf{Ouput(num\_class,activation='softmax')}$
+}
+\newpage
+{\small
+\begin{center}
+\begin{longtable}{lccl}
+\caption{\textbf{Bảng mô tả mạng CNN}}
+\label{variability_impl_mech}
+\endfirsthead
+\endhead
+\hline
+	Layer (type)              &      Output Shape     &     Param\#   &  Connected to  \\
+\hline
+convolution2d\_1 (Convolution2D) & (None, 32, 32, 32) &   896    &     convolution2d\_input\_1[0][0]     \\
+\hline
+dropout\_1 (Dropout)          &    (None, 32, 32, 32)  &  0     &      convolution2d\_1[0][0]            \\
+\hline
+convolution2d\_2 (Convolution2D)&  (None, 32, 32, 32) &   9248   &     dropout\_1[0][0]          \\        
+\hline
+maxpooling2d\_1 (MaxPooling2D)   & (None, 32, 16, 16)&    0       &    convolution2d\_2[0][0]      \\      
+\hline
+convolution2d\_3 (Convolution2D) & (None, 64, 16, 16) &   18496   &    maxpooling2d\_1[0][0] \\             
+\hline
+maxpooling2d\_2 (MaxPooling2D)   & (None, 64, 8, 8)    &  0        &   convolution2d\_3[0][0] \\
+\hline
+convolution2d\_4 (Convolution2D) & (None, 128, 8, 8)  &   73856   &    maxpooling2d\_2[0][0]      \\       
+\hline
+dropout\_2 (Dropout)  &            (None, 128, 8, 8) &    0   &        convolution2d\_4[0][0]       \\     
 
+\hline
+convolution2d\_5 (Convolution2D)&  (None, 128, 8, 8) &    147584 &     dropout\_2[0][0]            \\      
+
+\hline
+maxpooling2d\_3 (MaxPooling2D) &   (None, 128, 4, 4) &    0   &        convolution2d\_5[0][0]     \\       
+
+\hline
+flatten\_1 (Flatten)        &      (None, 2048) &         0    &       maxpooling2d\_3[0][0]    \\        
+
+\hline
+dropout\_3 (Dropout)    &          (None, 2048)  &        0   &        flatten\_1[0][0]    \\              
+
+\hline
+dense\_1 (Dense)      &            (None, 1024)     &     2098176   &  dropout\_3[0][0]    \\              
+
+\hline
+dropout\_4 (Dropout)  &            (None, 1024)  &        0  &         dense\_1[0][0]      \\              
+\hline
+dense\_2 (Dense)       &           (None, 512)  &         524800&      dropout\_4[0][0]        \\          
+
+\hline
+dropout\_5 (Dropout)    &          (None, 512) &          0      &     dense\_2[0][0]        \\           
+
+\hline
+dense\_3 (Dense)         &         (None, 10) &           5130    &    dropout\_5[0][0]          \\        
+
+\hline
+\end{longtable} 
+\end{center}
+}
+Tổng params: 2878186
 \section{SVM}
 \chapter{Kết luận}
 \section{So sánh các phương pháp}
