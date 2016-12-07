@@ -291,13 +291,178 @@ dense\_3 (Dense)         &         (None, 10) &           5130    &    dropout\_
 }
 Tổng params: 2878186
 \section{SVM}
+\subsection{Cơ sở lý thuyết SVM}
+\subsubsection{Khái niệm-đặc điểm  }
+SVM là một phương pháp phân lớp tuyến tính (linear
+classifier), với mục đích xác định một siêu phẳng
+(hyperplane) để phân tách hai lớp của dữ liệu.\\
+SVM có một nền tảng lý thuyết chặt chẽ\\
+SVM là một phương pháp tốt (phù hợp) đối với những bài
+toán phân lớp có không gian rất nhiều chiều (các đối
+tượng cần phân lớp được biểu diễn bởi một tập rất lớn
+các thuộc tính)\\
+
+Biểu đồ histogram:
+Histogram là một dạng biểu đồ biểu diễn số lượng điểm ảnh tương ứng với mức độ sáng tối của bức ảnh.\\
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.9]{histogram.png}
+\caption{Histogram}
+\label{fig:histogram}
+\end{figure}
+\subsection{Cơ sở lý thuyết}
+Biểu diễn tập huấn luyện 
+$${x_1, y_1}, (x_2,y_2),...(x_r,y_r)$$
+\begin{itemize}
+\item $x_i$ là một vectơ đầu vào $x_i \subseteq R^n$
+\item $y_i\in{1,-1}$ là một nhãn lớp
+Hàm phân tách tuyến tính 
+$$f(x)=<w.x> +b$$
+w là vectơ trọng số các thuộc tính, b là một giá trị số thực\\
+
+
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=3.0]{margin-svm.png}
+\caption{Siêu phẳng phân tách}
+\label{fig:margin-svm}
+\end{figure}
+Khoảng cách từ một điểm đến siêu phẳng 
+$$\frac{|<w.x_i>+b|}{||w||} $$
+$$margin=d_+ +d_-=\frac{2}{||w||}$$ 
+Tương đương bài toán cực tiểu hóa $\frac{<w.w>}{2}$ với điều kiện 
+$$ \lbrace\begin{array}{l}
+ <w.x_i>+b \geq 1 if y_i=1\\ <w.x_i>+b
+    \leq -1  if y_i=-1 \end{array} $$
+Áp dụng phương pháp Lagrange  
+$$ L= 1/2 ||\overline{w}||^2 -\sum\alpha_i[y_i(\overline{w}.\overline{x_i} +b)-1] $$
+Điều kiện 
+$$ \frac{ \partial}{\partial\overline{w}}
+=\overline{w}- \sum \alpha_i y_i x_i=0 \Longrightarrow \overline{w}=\sum \alpha_i y_i \overline{x_i} $$
+$$\frac{ \partial}{\partial b}=-\sum \alpha_i y_i \Longrightarrow \sum x_i y_i=0$$ 
+Thế vào ta được biểu thức :
+$$L_D(\alpha)=\sum_{i=1}^r \alpha_i-1/2 \sum_{i,j=1}^{r}\alpha_i \alpha_j y_i y_j<x_i.x_j> $$
+Điều kiện:
+$$\{ \begin{array}{l}
+\sum_{i=1 } ^{r} \alpha_i y_i =0 \\
+\alpha_i \geq 0 \forall i=1..r
+\end{array}
+$$
+Dung phương pháp lặp giải cuối cùng thu được
+$$w^* =\sum_{x_i \in SV} \alpha_i y_i x_i  $$
+$$b^*=y_k-<w*,x_k>$$
+Để phân lớp cho giá trị mới ta tìm dấu của siêu phẳng $$ f(x)=\sum_{x_i \in SV} \alpha_i y_i <x_i .x>+b^*$$
+Nới lỏng điểu kiện :
+$$L_D(\alpha)=\sum_{i=1}^r \alpha_i-1/2 \sum_{i,j=1}^{r}\alpha_i \alpha_j y_i y_j<x_i.x_j> $$
+$$
+\{ \begin{array}{l}
+\sum_{i=1 } ^{r} \alpha_i y_i =0 \\
+0 \leq \alpha_i \leq C \forall i=1..r
+\end{array}
+$$
+Phân lớp không tuyến tính một vài hàm nhân:
+Đa thức $K(x,z)=(<x.z>+\Theta)^d $
+Gaussian RBF $K(x,z)=e^{\frac{||x-z||^2}{2*\sigma}}$ trong đó $\sigma >0$
+Phân lớp nhiều nhãn 2 chiến lược :
+\begin{itemize}
+\item one-versus-rest
+\item one-versus-one 
+\end{itemize}
+\subsection{Cài đặt áp dụng với bài toán phân loại ảnh}
+\subsubsection{Công cụ}
+Ngôn ngữ lập trình python, thư viện học máy scikit-learn, opencv
+Đọc dữ liệu :
+\begin{lstlisting}
+#have 5 bacth 
+#read batch 1
+fo = open("data_batch_1", 'rb')
+dict = cPickle.load(fo)
+da=np.array(dict.get('data'))
+lb=np.array(dict.get('labels'))
+fo.close()
+\end{lstlisting}
+Huấn luyện mô hình kernel là hàm nhân sử dụng (rbf,linear,poly) C là tham số nới lỏng mô hình, gamma tham số ảnh của hàm nhân(ảnh hưởng đến giá trị).
+Với hàm poly ta còn có tham số degree(mũ) và coef0(b) phương thức fit của SVC dùng để train mô hình 
+\begin{lstlisting}
+clf = SVC(C=5, kernel='rbf',gamma='auto')
+from datetime import datetime
+print("start",str(datetime.now()))
+clf.fit(trainX, trainY)
+print("end train",str(datetime.now()))
+\end{lstlisting}
+Đoán tập test: phương thức predict dùng để đoán nhãn cho tập test 
+\begin{lstlisting}
+res=clf.predict(testX)
+print("end predict ",str(datetime.now()))
+sol=(res==testY)
+print(res[:10])
+print(testY[:10])
+print(sol[:10])
+print(sol.sum())
+
+\end{lstlisting}
+Sử dụng histogram để xây dựng đầu vào cho SVM : 
+
+Histogram với rbg color: sử dụng cv2 để tạo ra ma trận histogram , cv nhận đầu vào là ảnh nên ta phải chuyển ma trận từ dữ liệu thành ma trận ảnh rbg kích thước 32 32 3. \\
+Các tham số của hàm  calcHist như sau 
+\begin{itemize}
+\item Đầu vào ảnh 
+\item Số đại diện cho màu cần tạo histogram [0 1 2] tức là cả 3 màu r b g
+\item bin tương ứng từng màu với dữ liệu ảnh theo (1) khuyên nên chọn 16 
+\item Vùng màu chọn 
+\end{itemize}
+\begin{lstlisting}
+lhistr=[]
+for i in range(50000):
+    #print i
+    histr = cv2.calcHist(da[i].reshape((3,1024)).T.reshape((32,32,3)),[0,1,2 ],None,[16,16,16],[0,256,0,256,0,256])        
+    lhistr.append(histr.ravel())
+
+trainX=np.array(lhistr)
+\end{lstlisting}
+Histogram với gray color:
+Sử dụng hàm chuyển đổi màu của opencv cvtColor() việc này đồng nghĩa sẽ giảm số chiều của dữ liệu xuống bằng bins ở đây là 16.
+\begin{lstlisting}
+lhistr=[]
+for i in range(50000):
+    #print i
+    histr = cv2.calcHist(cv2.cvtColor(da[i].reshape((3,1024)).T.reshape((32,32,3)), cv2.COLOR_BGR2GRAY),[0],None,[16],[0,256])
+    lhistr.append(histr.ravel())
+
+trainX=np.array(lhistr)
+\end{lstlisting}
+Phương pháp đánh giá sử dụng: hold on
+\subsection{Kết quả thực nghiệm}
+Áp dụng toàn bộ với chiền lược one vs all
+\begin{itemize}
+\item SVM rbf C=5 autosklearn=(gamma=1/3072(xích ma=3072)) độ chính xác $\approx 25 \%$  
+\item SVM poly C=5 autosklearn=(gamma=1/3072 n=3) độ chính xác $\approx 38,2 \%$
+\item SVM linear C=5  độ chính xác $\approx 32 \%$    
+\item SVM poly histogram bin=16 C=5 autosklearn=(gamma=1/3072 n=3) độ chính xác $\approx 37,6 \%$
+\item SVM poly gray histogram bin=16 C=5 autosklearn=(gamma=1/3072 n=3) độ chính xác $\approx 29,6 \%$
+\end{itemize}
 \chapter{Kết luận}
 \section{So sánh các phương pháp}
 \section{Khó khăn gặp phải}
+Phương pháp SVM
+\begin{itemize}
+\item Bộ dữ liệu lớn train rất lâu poly (5 tiếng) rbf(10 tiếng) rất khó để xử lý chọn các tham số 
+\item SVM rất nhiều tham số cần phải thử nghiệm rất nhiều
+
+\end{itemize}
 \section{Kinh nghiệm rút ra được}
 \chapter{Tài liệu tham khảo}
 \begin{verbatim}
-[+] https://
+[+] Slide Học Máy TS. Thân Quang Khoát
+[+] Opencourse in Mit-SVM 
+[+]  http://www.svm-tutorial.com/2016/09/unconstrained-minimization/
+[+] https://ongxuanhong.wordpress.com/2015/09/19/support-vector-machine-svm-hoi-gi-dap-nay/
+[+] http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC 
+[+] SVMs for Histogram-Based Image Classification
+Olivier Chapelle, Patrick Haffner and Vladimir Vapnik
+[+] http://docs.opencv.org/3.1.0/d1/db7/tutorial_py_histogram_begins.html
+
 
 \end{verbatim}
 
