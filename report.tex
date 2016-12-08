@@ -5,6 +5,7 @@
 \usepackage{longtable}
 \usepackage{listings}
 \usepackage{relsize}
+\usepackage{cases} 
 \usepackage[left=3cm, right=2.00cm, top=2.00cm, bottom=2.00cm]{geometry}
 \lstset{
    %keywords={break,case,catch,continue,else,elseif,end,for,function,
@@ -88,6 +89,72 @@ Phan Anh Tú & 20130856 & CNTT2.02-K58 \\
 
 \subsection{Kết quả}
 \section{Mạng neural}
+\subsection{Cơ sở lý thuyết}
+\begin{itemize}
+\item Mạng neural mô tả quá trình xử lý thông tin của các neural trong bộ não con người
+\item Mỗi neural có các giá trị vào ra và có xử lý tính toán cục bộ
+\item Cấu trúc và hoạt động của một neural
+\begin{itemize}
+\item Các tín hiệu đầu vào, mỗi tính hiệu đầu vào được gắn một trọng số $w_i$
+\item Trọng số điều chỉnh $w_0$
+\item Hàm tích hợp các tín hiệu đầu vào
+\item Hàm hoạt động: tính giá trị đầu ra
+\begin{itemize}
+\item Hàm sigmod $\sigma(x)= \frac{1}{(1+e^{-x})}$
+\item Hàm tanh $tanh(x)=2\sigma(2x)-1$
+\item Hàm ReLu $f(x)=max(0,x)$
+\item Hàm Leaky $Relu=(x<0)(\alpha x)\textbar \textbar(x>=0)(x) $
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{neuron_model.jpeg}
+\caption{Mô hình mạng neural}
+\label{fig:splitdata}
+\end{figure}
+\end{itemize}
+\item Kiến trúc mạng neural
+\begin{itemize}
+\item Mạng lan truyền tiến
+\item Mạng hồi qui
+\end{itemize}
+\item 2 kiểu học trong mạng neural
+\begin{itemize}
+\item Học tham số: thay đổi tham số để thích nghi với dữ liệu và liên kết trong mạng 
+\item Học cấu trúc: mục tiêu thay đổi cấu trúc thích nghi cấu trúc mạng 
+\end{itemize}
+\item Học tham số
+\begin{itemize}
+ \item Mỗi bước lặp học các trọng số w theo công thức: $w^t=w^t + \Delta w^{t}$
+ \item $\Delta w^{t}=\eta r^tx^{t-1}$
+ \item Với $\$eta$ là tốc độ học
+ \item Để thuật toán hội tụ thì cần chọn tốc độ học thoả mãn:
+ \begin{itemize}
+ \item $\sum_{i=1}^na_n=\infty$
+ \item $\sum_{i=1}^na_n^2<\infty$
+ \end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Cài đặt}
+\begin{itemize}
+\item Số tầng ẩn: 2
+\item Tâng ẩn 1: 2048 neural, tầng ẩn 2: 1024 neural
+\item Hàm active: sigmod= $\frac{1}{1+e^{-x}}$
+\item Hàm score: sigmod= $\frac{1}{1+e^{-x}}$
+\item Hàm loss: $\frac{1}{2}\sum_{i=1}^n(y_i^2-p_i^2)<\infty$
+\item Tốc độ học $\frac{1}{ \sqrt{n}} $
+\item Giải thuật học : lan truyền ngược
+\begin{itemize}
+\item Công thức cập nhật tham số cho w tại tầng output: $\Delta w^{iq }=\eta \Upsilon_i out_q$
+\item $\Upsilon_i=[y_i - p_i]f'(Net_i)$
+\item Công thức cập nhật tham số cho tầng ẩn 1 và 2: $\Delta w^{qj}=\eta \Upsilon_q x_j$
+\item $\Upsilon_q=f'(Net_q)\sum_{i=1}^n\Upsilon_i w_{iq}$
+\end{itemize}
+\item Ngôn ngữ lập trình: matlab
+\end{itemize}
+\subsection{Kết quả}
+\begin{itemize}
+\item Độ chính xác$\approx 35 \%$  
+\end{itemize}
 \section{Convolutional Neural Networks(CNN)}
 \subsection{Giới thiệu}
 Convolutional Neural Networks tương tư như các mạng nerual network khác. Chúng được tạo thành từ các tế bào noron có thể học trọng số và biases.Mỗi noron thực hiện hiện môt số sản xuất và tùy chọn với đường phi tuyến.Toàn bộ mạng vẫn thể hiện một hàm số khả vi duy nhất: từ các điểm ảnh hình ảnh thô trên một đầu với điểm số lớp học khác. Chúng vẫn có một hàm lỗi(ví dụ như SVM/softmax) ở lớp cuỗi (với kết nối đầy đủ).
