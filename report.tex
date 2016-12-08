@@ -83,11 +83,93 @@ Phan Anh Tú & 20130856 & CNTT2.02-K58 \\
 \chapter{Các phương pháp sử dụng và kết quả thực nghiệm}
 \section{KNN}
 \subsection{Cơ sở lý thuyết}
+\begin{itemize}
+\item Giai đoạn học
+\begin{itemize}
+\item KNN - K nearest neighbors : là một phương pháp học máy dựa trên việc lưu lại các các ví dụ học trong tập dữ liệu training.
+\end{itemize}
+\item Giai đoạn phân lớp
+\begin{itemize}
+\item Dùng một hàm để tính độ tương đồng giữa các ví dụ traning đã lưu và dữ liệu từ bộ test.
+\item Lưu lại k ví dụ có độ tương đồng với dữ liệu test nhất, từ đó dự đoán nhãn cho ví dụ test đầu vào theo lớp chiếm số đông trong số các lớp của k láng giềng. 
+\end{itemize}
+\item Vấn đề cần giải quyết với giải thuật KNN
+\begin{itemize}
+\item Có nhiều hàm tính độ tương đồng, cần lựa chọn và thử nghiệm để chọn ra hàm tương đồng phù hợp với bộ dữ liệu.
+\item Lấy bao nhiêu hàng xóm cho đủ. 
+\end{itemize}
+\end{itemize}
 \subsection{Cài đặt}
+\begin{itemize}
+\item Biểu diễn dữ liệu: mỗi dữ liệu sẽ được biểu diễn thông qua các vector $x=(x_1,x_2,...,x_n,y)$
+\begin{itemize}
+\item $x_i$ là các thuộc tính 
+\item y là nhãn lớp
+\end{itemize}
+\item Lựa chọn mô hình
+\begin{itemize}
+\item Hàm tính độ tương đồng  :D(x,y)= $\sum_{i=1}^n(\left\|x_i - y_i\right\|)$
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{dknn.jpeg}
+\caption{Function distance KNN}
+\label{fig:knn}
+\end{figure}
+\item Lựa chọn k:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{crossval.jpeg}
+\caption{Split data}
+\label{fig:splitdata}
+\end{figure}
+\begin{itemize}
+\item Bước đầu, dữ liệu được chia ra thành 2 phần train và test
+\item Tiếp theo từ tập train, chia dữ thành 5 fold, lấy 4 fold cho việc học, 1 fold dùng validation
+\item Thử cho các giá trị  $k={3,4,5,6,7}$, lựa chọn các giá trị tốt nhất
+\end{itemize}
+\end{itemize}
+\end{itemize}
 (ghi chú: cần nêu rõ cấu trúc mã nguồn, chương trình, vai trò của các lớp và các phương thức chính)
 
 \subsection{Kết quả}
+\begin{itemize}
+\item K thu được là 7
+\item Kết quả $\approx 11\% $
+\begin{center}
+\begin{longtable}{lccccccccl}
+\caption{\textbf{Bảng mô tả kết quả KNN}}
+\endfirsthead
+\endhead
+\hline
+0       &    1   &   2    &     3    &    4    &    5    &    6    &     7   &    8    &    9  \\
+\hline
+$40\%$  & $2\%$   & $13.6\%$ & $1.2\%$   & $23.3\%$ & $1.5\%$  & $1.3\%$  & $1.1\%$  & $14.6\%$ & $1\%$\\
+\hline
+$38\%$  & $5\%$   & $13\%$ & $2\%$   & $24\%$ & $1\%$  & $2.2\%$  & $1.1\%$  & $12\%$ & $1.5\%$\\
+\hline
+$48\%$  & $1.4\%$   & $17\%$ & $0.5\%$   & $13\%$ & $0.2\%$  & $0.5\%$  & $1.6\%$  & $17\%$ & $0.8\%$\\
+\hline
+$45\%$  & $2.3\%$   & $12\%$ & $2\%$   & $18\%$ & $0.8\%$  & $0.5\%$  & $3.1\%$  & $12\%$ & $4.2\%$\\
+\hline
+$60\%$  & $4.4\%$   & $10\%$ & $2.5\%$   & $8\%$ & $1.2\%$  & $3.5\%$  & $0.1\%$  & $10\%$ & $0.2\%$\\
+\hline
+$54\%$  & $1.4\%$   & $18\%$ & $0.5\%$   & $11\%$ & $4.1\%$  & $0.5\%$  & $0.9\%$  & $18\%$ & $0.6\%$\\
+\hline
+$50.1\%$  & $0.1\%$   & $12.5\%$ & $1.1\%$   & $17\%$ & $0.2\%$  & $0.5\%$  & $0.2\%$  & $17\%$ & $0.2\%$\\
+\hline
+$48\%$  & $0\%$   & $15.7\%$ & $0\%$   & $0\%$ & $0\%$  & $0\%$  & $0\%$  & $18.6\%$ & $0\%$\\
+\hline
+$35.3\%$  & $4.4\%$   & $12.3\%$ & $0.6\%$   & $17.9\%$ & $1.9\%$  & $0.1\%$  & $0\%$  & $27.3\%$ & $0.2\%$\\
+\hline
+$45.8\%$  & $1\%$   & $14.7\%$ & $2.3\%$   & $19.2\%$ & $1\%$  & $0.3\%$  & $0\%$  & $15.5\%$ & $0.2\%$\\
+\hline
+\end{longtable} 
+\end{center}
+\end{itemize}
 \section{Mạng neural}
+\subsection{Cơ sở lý thuyết}
+\subsection{Cài đặt}
+\subsection{Kết quả}
 \section{Convolutional Neural Networks(CNN)}
 \subsection{Giới thiệu}
 Convolutional Neural Networks tương tư như các mạng nerual network khác. Chúng được tạo thành từ các tế bào noron có thể học trọng số và biases.Mỗi noron thực hiện hiện môt số sản xuất và tùy chọn với đường phi tuyến.Toàn bộ mạng vẫn thể hiện một hàm số khả vi duy nhất: từ các điểm ảnh hình ảnh thô trên một đầu với điểm số lớp học khác. Chúng vẫn có một hàm lỗi(ví dụ như SVM/softmax) ở lớp cuỗi (với kết nối đầy đủ).
