@@ -215,21 +215,25 @@ $45.8\%$  & $1\%$   & $14.7\%$ & $2.3\%$   & $19.2\%$ & $1\%$  & $0.3\%$  & $0\%
 \end{itemize}
 \subsection{Cài đặt}
 \begin{itemize}
-\item Mô hình một
 \item Số tầng ẩn: 2
-\item Tâng ẩn 1: 2048 neural
-\item Tầng ẩn 2: 1024 neural
-\item Hàm active: sigmod
-\item Hàm score: sigmod
+\item Tâng ẩn 1: 2048 neural, tầng ẩn 2: 1024 neural
+\item Hàm active: sigmod= $\frac{1}{1+e^{-x}}$
+\item Hàm score: sigmod= $\frac{1}{1+e^{-x}}$
 \item Hàm loss: $\frac{1}{2}\sum_{i=1}^n(y_i^2-p_i^2)<\infty$
-\item Giải thuật học : lan truyền ngược:
+\item Tốc độ học $\frac{1}{ \sqrt{n}} $
+\item Giải thuật học : lan truyền ngược
 \begin{itemize}
-\item Công thức cập nhật tham số cho w tại tầng output: $\Delta w^{t}=\eta $
-\item Công thức cập nhật tham số cho tầng 
-\end{itemize }
-\item Mô hình hai
+\item Công thức cập nhật tham số cho w tại tầng output: $\Delta w^{iq }=\eta \Upsilon_i out_q$
+\item $\Upsilon_i=[y_i - p_i]f'(Net_i)$
+\item Công thức cập nhật tham số cho tầng ẩn 1 và 2: $\Delta w^{qj}=\eta \Upsilon_q x_j$
+\item $\Upsilon_q=f'(Net_q)\sum_{i=1}^n\Upsilon_i w_{iq}$
+\end{itemize}
+\item Ngôn ngữ lập trình: matlab
 \end{itemize}
 \subsection{Kết quả}
+\begin{itemize}
+\item Độ chính xác$\approx 35 \%$  
+\end{itemize}
 \section{Convolutional Neural Networks(CNN)}
 \subsection{Giới thiệu}
 Convolutional Neural Networks tương tư như các mạng nerual network khác. Chúng được tạo thành từ các tế bào noron có thể học trọng số và biases.Mỗi noron thực hiện hiện môt số sản xuất và tùy chọn với đường phi tuyến.Toàn bộ mạng vẫn thể hiện một hàm số khả vi duy nhất: từ các điểm ảnh hình ảnh thô trên một đầu với điểm số lớp học khác. Chúng vẫn có một hàm lỗi(ví dụ như SVM/softmax) ở lớp cuỗi (với kết nối đầy đủ).
