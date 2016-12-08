@@ -60,7 +60,7 @@ Nguyễn Tuấn Đạt & 20130856 & CNTT2.02-K58 \\
 Vũ Minh Đức & 20130856 & CNTT2.02-K58 \\
 Nguyễn Ngọc Huyền & 20130856 & CNTT2.02-K58 \\
 Đặng Quang Trung & 20130856 & CNTT2.02-K58 \\
-Phan Anh Tú & 20130856 & CNTT2.02-K58 \\
+Phan Anh Tú & 20134501 & CNTT2.01-K58 \\
 
 \end{longtable}
 
@@ -139,7 +139,7 @@ Mạng CNN có 4 tầng chính: Convolution Layer, ReLu Layer , Pooling Layer, F
 \end{itemize}
 \subsubsection{Lớp RELU Layer}
 Tầng sẽ áp dụng hàm tác động, thông thường sẽ làm hàm ReLu max(0,x).Hàm sẽ tác động lên từng phần tử của ma trận đầu vào nên ma trận đi qua tầng này sẽ không thay đổi kích thước.
-\subsubsection{Lớp PoolingLayer}
+\subsubsection{Pooling Layer}
 \begin{itemize}
 \item[-] Thường chèn tầng pooling vào giữa các tầng Conv để giảm kích thước ma trận.
 \item[-] Nhận đầu vào là ma trận $W_1*H_1*D_1$ là kích thước của ma trận đầu ra của tầng Conv.
@@ -155,7 +155,7 @@ Tầng sẽ áp dụng hàm tác động, thông thường sẽ làm hàm ReLu m
 \item[•] $D_2 = D_1$.
 \end{itemize}
 \end{itemize}
-\subsubsection{Lớp Fully-connected Layer}
+\subsubsection{Fully-connected Layer (FC)}
 \begin{itemize}
 \item[-] Như mạng neuron thông thường,các neuron trong tầng Fully-connected kết nối với toàn bộ các neuron ở tầng trước nó: Nhận đầu vào là vector áp dụng hàm tác động và đưa ra đầu ra.
 \end{itemize}
@@ -163,8 +163,9 @@ Tầng sẽ áp dụng hàm tác động, thông thường sẽ làm hàm ReLu m
 \begin{center}
 \includegraphics[width =0.8 \textwidth]{ConvNetArchitecture.png}
 \end{center}
+\caption{Ví dụ về kiến trúc mạng CNN}
 \end{figure}
-\subsubsection{Lớp Max norm constraint và Dropout}
+\subsubsection{Max norm constraint và Dropout}
 Để giảm overfit ta có thể áp dụng các kỹ thuật như:
 \begin{itemize}
 \item[-] Thêm max norm constraint cho các trọng số.
@@ -190,6 +191,9 @@ $\Delta w^{(t+1)} = \mu . \Delta w^t - \eta . \nabla E^{t+1}$.
 \end{figure}
 \subsection{Mạng CNN Đơn giản}
 \subsubsection{Cấu trúc mạng}
+\small{
+$\textbf{INPUT} \rightarrow \textbf{CONV} \rightarrow \textbf{RELU} \rightarrow \textbf{DropOut} \rightarrow \textbf{CONV} \rightarrow \textbf{RELU} \rightarrow \textbf{POOL} \rightarrow \textbf{Fully-connected(RELU)}\rightarrow \textbf{DropOut} \rightarrow \textbf{Fully-connected(softmax)}$
+}
 \subsubsection{Cài đặt chương trình}
 Sử dụng thư viện keras
 \begin{itemize}
@@ -277,7 +281,7 @@ $L = -\frac{1}{N}\Sigma_{i=1}^{N}\big[y_i\log y_i + (1-\tilde{y_i})\big]$ (c là
 \end{itemize}
 \end{itemize}
 \subsubsection{Kết quả}
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width =1.0 \textwidth]{testImg.png}
 \end{center}
@@ -606,7 +610,7 @@ Phương Pháp CNN
 \begin{verbatim}
 [+] Slide Học Máy TS. Thân Quang Khoát
 [+] Opencourse in Mit-SVM 
-[+]  http://www.svm-tutorial.com/2016/09/unconstrained-minimization/
+[+] http://www.svm-tutorial.com/2016/09/unconstrained-minimization/
 [+] https://ongxuanhong.wordpress.com/2015/09/19/support-vector-machine-svm-hoi-gi-dap-nay/
 [+] http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC 
 [+] SVMs for Histogram-Based Image Classification
