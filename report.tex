@@ -83,11 +83,93 @@ Phan Anh Tú & 20130856 & CNTT2.02-K58 \\
 \chapter{Các phương pháp sử dụng và kết quả thực nghiệm}
 \section{KNN}
 \subsection{Cơ sở lý thuyết}
+\begin{itemize}
+\item Giai đoạn học
+\begin{itemize}
+\item KNN - K nearest neighbors : là một phương pháp học máy dựa trên việc lưu lại các các ví dụ học trong tập dữ liệu training.
+\end{itemize}
+\item Giai đoạn phân lớp
+\begin{itemize}
+\item Dùng một hàm để tính độ tương đồng giữa các ví dụ traning đã lưu và dữ liệu từ bộ test. 
+\item Lưu lại k ví dụ có độ tương đồng với dữ liệu test nhất, từ đó dự đoán nhãn cho ví dụ test đầu vào theo lớp chiếm số đông trong số các lớp của k láng giềng. 
+\end{itemize}
+\item Vấn đề cần giải quyết với giải thuật KNN
+\begin{itemize}
+\item Có nhiều hàm tính độ tương đồng, cần lựa chọn và thử nghiệm để chọn ra hàm tương đồng phù hợp với bộ dữ liệu.
+\item Lấy bao nhiêu hàng xóm cho đủ. 
+\end{itemize}
+\end{itemize}
 \subsection{Cài đặt}
+\begin{itemize}
+\item Biểu diễn dữ liệu: mỗi dữ liệu sẽ được biểu diễn thông qua các vector $x=(x_1,x_2,...,x_n,y)$
+\begin{itemize}
+\item $x_i$ là các thuộc tính 
+\item y là nhãn lớp
+\end{itemize}
+\item Lựa chọn mô hình
+\begin{itemize}
+\item Hàm tính độ tương đồng  :D(x,y)= $\sum_{i=1}^n(\left\|x_i - y_i\right\|)$
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{dknn.jpeg}
+\caption{Function distance KNN}
+\label{fig:knn}
+\end{figure}
+\item Lựa chọn k:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{crossval.jpeg}
+\caption{Split data}
+\label{fig:splitdata}
+\end{figure}
+\begin{itemize}
+\item Bước đầu, dữ liệu được chia ra thành 2 phần train và test
+\item Tiếp theo từ tập train, chia dữ thành 5 fold, lấy 4 fold cho việc học, 1 fold dùng validation
+\item Thử cho các giá trị  $k={3,4,5,6,7}$, lựa chọn các giá trị tốt nhất
+\end{itemize}
+\end{itemize}
+\end{itemize}
 (ghi chú: cần nêu rõ cấu trúc mã nguồn, chương trình, vai trò của các lớp và các phương thức chính)
 
 \subsection{Kết quả}
+\begin{itemize}
+\item K thu được là 7
+\item Kết quả $\approx 11\% $
+\begin{center}
+\begin{longtable}{lccccccccl}
+\caption{\textbf{Bảng mô tả kết quả KNN}}
+\endfirsthead
+\endhead
+\hline
+0       &    1   &   2    &     3    &    4    &    5    &    6    &     7   &    8    &    9  \\
+\hline
+$40\%$  & $2\%$   & $13.6\%$ & $1.2\%$   & $23.3\%$ & $1.5\%$  & $1.3\%$  & $1.1\%$  & $14.6\%$ & $1\%$\\
+\hline
+$38\%$  & $5\%$   & $13\%$ & $2\%$   & $24\%$ & $1\%$  & $2.2\%$  & $1.1\%$  & $12\%$ & $1.5\%$\\
+\hline
+$48\%$  & $1.4\%$   & $17\%$ & $0.5\%$   & $13\%$ & $0.2\%$  & $0.5\%$  & $1.6\%$  & $17\%$ & $0.8\%$\\
+\hline
+$45\%$  & $2.3\%$   & $12\%$ & $2\%$   & $18\%$ & $0.8\%$  & $0.5\%$  & $3.1\%$  & $12\%$ & $4.2\%$\\
+\hline
+$60\%$  & $4.4\%$   & $10\%$ & $2.5\%$   & $8\%$ & $1.2\%$  & $3.5\%$  & $0.1\%$  & $10\%$ & $0.2\%$\\
+\hline
+$54\%$  & $1.4\%$   & $18\%$ & $0.5\%$   & $11\%$ & $4.1\%$  & $0.5\%$  & $0.9\%$  & $18\%$ & $0.6\%$\\
+\hline
+$50.1\%$  & $0.1\%$   & $12.5\%$ & $1.1\%$   & $17\%$ & $0.2\%$  & $0.5\%$  & $0.2\%$  & $17\%$ & $0.2\%$\\
+\hline
+$48\%$  & $0\%$   & $15.7\%$ & $0\%$   & $0\%$ & $0\%$  & $0\%$  & $0\%$  & $18.6\%$ & $0\%$\\
+\hline
+$35.3\%$  & $4.4\%$   & $12.3\%$ & $0.6\%$   & $17.9\%$ & $1.9\%$  & $0.1\%$  & $0\%$  & $27.3\%$ & $0.2\%$\\
+\hline
+$45.8\%$  & $1\%$   & $14.7\%$ & $2.3\%$   & $19.2\%$ & $1\%$  & $0.3\%$  & $0\%$  & $15.5\%$ & $0.2\%$\\
+\hline
+\end{longtable} 
+\end{center}
+\end{itemize}
 \section{Mạng neural}
+\subsection{Cơ sở lý thuyết}
+\subsection{Cài đặt}
+\subsection{Kết quả}
 \section{Convolutional Neural Networks(CNN)}
 \subsection{Giới thiệu}
 Convolutional Neural Networks tương tư như các mạng nerual network khác. Chúng được tạo thành từ các tế bào noron có thể học trọng số và biases.Mỗi noron thực hiện hiện môt số sản xuất và tùy chọn với đường phi tuyến.Toàn bộ mạng vẫn thể hiện một hàm số khả vi duy nhất: từ các điểm ảnh hình ảnh thô trên một đầu với điểm số lớp học khác. Chúng vẫn có một hàm lỗi(ví dụ như SVM/softmax) ở lớp cuỗi (với kết nối đầy đủ).
@@ -167,41 +249,17 @@ $\Delta w^{(t+1)} = \mu . \Delta w^t - \eta . \nabla E^{t+1}$.
 Sử dụng thư viện keras
 \begin{itemize}
 \item[-] Load data và xử lí dữ liệu:
-\begin{lstlisting}
-(X_train, y_train), (X_test, y_test) = cifar10.load_data()
-
-# normalize inputs from 0-255 to 0.0-1.0
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-X_train = X_train / 255.0
-X_test = X_test / 255.0
-
-
-# one hot encode outputs
-y_train = np_utils.to_categorical(y_train)
-y_test = np_utils.to_categorical(y_test)
-num_classes = y_test.shape[1]
-\end{lstlisting}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width =0.7 \textwidth]{code1.png}
+\end{center}
+\end{figure}
 \item[-] Thêm các tầng
-{\small
-\begin{lstlisting}
-# Create the model
-model = Sequential()
-model.add(Convolution2D(32,3,3,input_shape=(3,32,32),... 
- 	border_mode='same',activation='relu',...
- 			W_constraint=maxnorm(3)))
-model.add(Dropout(0.2))
-model.add(Convolution2D(32,3,3,activation='relu',...
-	border_mode='same',...
-			W_constraint=maxnorm(3)))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Flatten())
-model.add(Dense(512,activation='relu',...
-		W_constraint=maxnorm(3)))
-model.add(Dropout(0.5))
-model.add(Dense(num_classes, activation='softmax'))
-\end{lstlisting}
-}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width =0.7 \textwidth]{code2.png}
+\end{center}
+\end{figure}
 \begin{itemize}
 \item[•] Các tầng Conv có các tham số:
 \begin{itemize}
@@ -230,15 +288,11 @@ model.add(Dense(num_classes, activation='softmax'))
 \end{itemize}
 \end{itemize}
 \item[-] Traning:
-\begin{lstlisting}
-#have 5 bacth 
-#read batch 1
-fo = open("data_batch_1", 'rb')
-dict = cPickle.load(fo)
-da=np.array(dict.get('data'))
-lb=np.array(dict.get('labels'))
-fo.close()
-\end{lstlisting}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width =0.7 \textwidth]{code3.png}
+\end{center}
+\end{figure}
 \begin{itemize}
 \item[•] Số epoch thực hiện 25
 \item[•] Learning rate: 0.01
@@ -265,7 +319,7 @@ $\textbf{INPUT} \rightarrow \textbf{CONV} \rightarrow \textbf{RELU} \rightarrow 
 \begin{center}
 \begin{longtable}{lccl}
 \caption{\textbf{Bảng mô tả mạng CNN}}
-\label{}
+\label{variability_impl_mech}
 \endfirsthead
 \endhead
 \hline
@@ -318,102 +372,10 @@ dense\_3 (Dense)         &         (None, 10) &           5130    &    dropout\_
 \end{center}
 }
 Tổng params: 2878186
-\subsubsection{Cài đặt chương trình}
-Sử dụng thư viện keras,cài đặt tương tự với mạng CNN đơn giản với các tham số:
-\begin{itemize}
-\item[•] epochs = 25
-\item[•] chiến lược tối ưu Stochastic gradient descent
-\begin{itemize}
-\item[-] Tỉ lệ học learn rate: lrate = 0.01
-\item[-] decay = lrate/epochs
-\end{itemize}
-\end{itemize}
-\subsubsection{Kết quả}
-{\small
-Epoch 1/25 \\
-50000/50000 [===] - 1047s - loss: 1.8077 - acc: 0.3323 - val\_loss: 1.4027 - val\_acc: 0.4874 \\
-Epoch 2/25 \\
-50000/50000 [===] - 1034s - loss: 1.3529 - acc: 0.5107 - val\_loss: 1.2112 - val\_acc: 0.5600 \\
-Epoch 3/25 \\
-50000/50000 [===] - 1035s - loss: 1.1446 - acc: 0.5892 - val\_loss: 1.0184 - val\_acc: 0.6379 \\
-Epoch 4/25 \\
-50000/50000 [===] - 1034s - loss: 0.9922 - acc: 0.6457 - val\_loss: 0.9022 - val\_acc: 0.6826 \\
-Epoch 5/25 \\
-50000/50000 [===] - 1036s - loss: 0.8755 - acc: 0.6877 - val\_loss: 0.8355 - val\_acc: 0.7097 \\
-Epoch 6/25 \\
-50000/50000 [===] - 1036s - loss: 0.7894 - acc: 0.7218 - val\_loss: 0.7886 - val\_acc: 0.7226 \\
-Epoch 7/25 \\
-50000/50000 [===] - 1037s - loss: 0.7251 - acc: 0.7422 - val\_loss: 0.7389 - val\_acc: 0.7412 \\
-Epoch 8/25 \\
-50000/50000 [===] - 1036s - loss: 0.6710 - acc: 0.7617 - val\_loss: 0.7038 - val\_acc: 0.7522 \\
-Epoch 9/25 \\
-50000/50000 [===] - 1036s - loss: 0.6332 - acc: 0.7766 - val\_loss: 0.6907 - val\_acc: 0.7613 \\
-Epoch 10/25 \\
-50000/50000 [===] - 1037s - loss: 0.5886 - acc: 0.7902 - val\_loss: 0.6712 - val\_acc: 0.7712 \\
-Epoch 11/25 \\
-50000/50000 [===] - 1036s - loss: 0.5572 - acc: 0.8018 - val\_loss: 0.6407 - val\_acc: 0.7768 \\
-Epoch 12/25 \\
-50000/50000 [===] - 1036s - loss: 0.5205 - acc: 0.8163 - val\_loss: 0.6548 - val\_acc: 0.7731 \\
-Epoch 13/25 \\
-50000/50000 [===] - 1036s - loss: 0.4976 - acc: 0.8226 - val\_loss: 0.6613 - val\_acc: 0.7737 \\
-Epoch 14/25 \\
-50000/50000 [===] - 1036s - loss: 0.4705 - acc: 0.8332 - val\_loss: 0.6355 - val\_acc: 0.7869 \\
-Epoch 15/25 \\
-50000/50000 [===] - 1036s - loss: 0.4486 - acc: 0.8412 - val\_loss: 0.6241 - val\_acc: 0.7933 \\
-Epoch 16/25 \\
-50000/50000 [===] - 1041s - loss: 0.4310 - acc: 0.8475 - val\_loss: 0.6288 - val\_acc: 0.7886 \\
-Epoch 17/25 \\
-50000/50000 [===] - 1037s - loss: 0.4122 - acc: 0.8552 - val\_loss: 0.6321 - val\_acc: 0.7877 \\
-Epoch 18/25 \\
-50000/50000 [===] - 1037s - loss: 0.3932 - acc: 0.8608 - val\_loss: 0.6300 - val\_acc: 0.7916 \\
-Epoch 19/25 \\
-50000/50000 [===] - 1037s - loss: 0.3721 - acc: 0.8669 - val\_loss: 0.6214 - val\_acc: 0.7956 \\
-Epoch 20/25 \\
-50000/50000 [===] - 1038s - loss: 0.3561 - acc: 0.8729 - val\_loss: 0.6317 - val\_acc: 0.7929\\
-Epoch 21/25 \\
-50000/50000 [===] - 1037s - loss: 0.3448 - acc: 0.8765 - val\_loss: 0.6168 - val\_acc: 0.7987 \\
-Epoch 22/25 \\
-50000/50000 [===] - 1037s - loss: 0.3271 - acc: 0.8833 - val\_loss: 0.6551 - val\_acc: 0.7927\\
-Epoch 23/25 \\
-50000/50000 [===] - 1037s - loss: 0.3225 - acc: 0.8844 - val\_loss: 0.6334 - val\_acc: 0.7999 \\
-Epoch 24/25 \\
-50000/50000 [===] - 1037s - loss: 0.3071 - acc: 0.8895 - val\_loss: 0.6259 - val\_acc: 0.7993 \\
-Epoch 25/25 \\
-50000/50000 [===] - 1037s - loss: 0.2948 - acc: 0.8946 - val\_loss: 0.6318 - val\_acc: 0.7991 \\
-}
-\\
-Trong đó:
-\begin{itemize}
-\item[•] loss: giá trị lỗi tập train
-\item[•] acc:  giá trị chính xác
-\item[•] val\_loss:  giá trị lỗi theo tập test
-\item[•] val\_acc: giá trị lỗi theo tâp test
-\end{itemize}
-\subsubsection{Đồ thị biểu diễn}
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width =1.0 \textwidth]{graph.png}
-\end{center}
-\end{figure}
-\subsubsection{Thực nghiệm}
-\begin{itemize}
-\item[•] Train với bộ dữ liệu là 50000 mẫu và 10000 mẫu test.
-\item[•] Sử dụng phương pháp đánh giá hand-out.
-\begin{itemize}
-\item[-] Dữ liệu được chia làm 2 phần tách biệt không giao nhau.
-\item[-] Bộ dữ liệu với các ví dụ nhiễu lỗi ít
-\end{itemize}
-\item[•] Kết quả thu đươc:
-\begin{itemize}
-\item[-] Chạy 8h với bộ xử lý Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz - 3.0GHz
-\item[-] Chạy theo chiến lược min-batch(32).
-\item[-] Độ chính xác khi đánh giá với tập test là: 79.91\%.
-\end{itemize}
-\end{itemize}
 \section{SVM}
 \subsection{Cơ sở lý thuyết SVM}
 \subsubsection{Khái niệm-đặc điểm  }
-SVM là một phương pháp phân lớp tuyến tính (linear
+SVM là một phương pháp phân lớp tuyến tính (linear a 
 classifier), với mục đích xác định một siêu phẳng
 (hyperplane) để phân tách hai lớp của dữ liệu.\\
 SVM có một nền tảng lý thuyết chặt chẽ\\
@@ -560,7 +522,7 @@ Phương pháp đánh giá sử dụng: hold on
 \item SVM poly C=5 autosklearn=(gamma=1/3072 n=3) độ chính xác $\approx 38,2 \%$
 \item SVM linear C=5  độ chính xác $\approx 32 \%$    
 \item SVM poly histogram bin=16 C=5 autosklearn=(gamma=1/3072 n=3) độ chính xác $\approx 37,6 \%$
-\item SVM poly gray histogram bin=16 C=5 autoskcearn=(gamma=1/3072 n=3) độ chính xác $\approx 29,6 \%$
+\item SVM poly gray histogram bin=16 C=5 autosklearn=(gamma=1/3072 n=3) độ chính xác $\approx 29,6 \%$
 \end{itemize}
 \chapter{Kết luận}
 \section{So sánh các phương pháp}
@@ -569,10 +531,7 @@ Phương pháp SVM
 \begin{itemize}
 \item Bộ dữ liệu lớn train rất lâu poly (5 tiếng) rbf(10 tiếng) rất khó để xử lý chọn các tham số 
 \item SVM rất nhiều tham số cần phải thử nghiệm rất nhiều
-\end{itemize}
-Phương Pháp CNN
-\begin{itemize}
-\item Phần cứng chưa đủ mạnh trên dữ liệu lâu (6h - 8h).
+
 \end{itemize}
 \section{Kinh nghiệm rút ra được}
 \chapter{Tài liệu tham khảo}
