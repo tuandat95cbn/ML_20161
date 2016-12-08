@@ -481,12 +481,12 @@ $$
 0 \leq \alpha_i \leq C \forall i=1..r
 \end{array}
 $$
-Phân lớp không tuyến tính một vài hàm nhân:
-Đa thức $K(x,z)=(<x.z>+\Theta)^d $
-Gaussian RBF $K(x,z)=e^{\frac{||x-z||^2}{2*\sigma}}$ trong đó $\sigma >0$
+Phân lớp không tuyến tính một vài hàm nhân:\\
+Đa thức $K(x,z)=(<x.z>+\Theta)^d $\\
+Gaussian RBF $K(x,z)=e^{\frac{||x-z||^2}{2*\sigma}}$ trong đó $\sigma >0$\\
 Phân lớp nhiều nhãn 2 chiến lược :
 \begin{itemize}
-\item one-versus-rest
+\item one-versus-all
 \item one-versus-one 
 \end{itemize}
 \subsection{Cài đặt áp dụng với bài toán phân loại ảnh}
@@ -536,7 +536,8 @@ Các tham số của hàm  calcHist như sau
 lhistr=[]
 for i in range(50000):
     #print i
-    histr = cv2.calcHist(da[i].reshape((3,1024)).T.reshape((32,32,3)),[0,1,2 ],None,[16,16,16],[0,256,0,256,0,256])        
+    histr = cv2.calcHist(da[i].reshape((3,1024)).T.reshape((32,32,3))
+    					,[0,1,2 ],None,[16,16,16],[0,256,0,256,0,256])        
     lhistr.append(histr.ravel())
 
 trainX=np.array(lhistr)
@@ -547,12 +548,13 @@ Sử dụng hàm chuyển đổi màu của opencv cvtColor() việc này đồn
 lhistr=[]
 for i in range(50000):
     #print i
-    histr = cv2.calcHist(cv2.cvtColor(da[i].reshape((3,1024)).T.reshape((32,32,3)), cv2.COLOR_BGR2GRAY),[0],None,[16],[0,256])
+    histr = cv2.calcHist(cv2.cvtColor(da[i].reshape((3,1024)).T.reshape((32,32,3))
+    							, cv2.COLOR_BGR2GRAY),[0],None,[16],[0,256])
     lhistr.append(histr.ravel())
 
 trainX=np.array(lhistr)
 \end{lstlisting}
-Phương pháp đánh giá sử dụng: hold on
+Phương pháp đánh giá sử dụng: hold out
 \subsection{Kết quả thực nghiệm}
 Áp dụng toàn bộ với chiền lược one vs all
 \begin{itemize}
@@ -574,15 +576,32 @@ Phương Pháp CNN
 \begin{itemize}
 \item Phần cứng chưa đủ mạnh trên dữ liệu lâu (6h - 8h).
 \end{itemize}
+Cách thức nhóm hoạt động:
+\begin{itemize}
+\item Xảy ra xung đột khi lập trình tổng hợp các phần code của các thành viên khi làm việc trên Git. \\
+\textbf{Hướng giải quyết}: Nhóm dành thời gian tìm hiểu và thống nhất cách thức làm việc.
+
+\item Khó khăn trong lịch hẹn gặp nhóm do thời gian biểu của từng thành viên trong nhóm là khác nhau.\\
+\textbf{Hướng giải quyết}: Thảo luận trong nhóm online, chủ động sắp xếp thời gian để gặp mặt bàn bạc, có thể không được đầy đủ mọi thành viên cùng lúc nhưng cần đảm bảo thông tin đến các thành viên là đầy đủ và đúng lúc.
+
+
+\end{itemize}
 \section{Kinh nghiệm rút ra được}
+\begin{itemize}
+\item Tiếp cận với các công nghệ mới, đa dạng khả năng làm việc khi gặp vấn đề trong thực tế
+\item Kỹ năng làm việc nhóm: Tích lũy thêm kinh nghiệm về cách thức trao đổi thông tin giữa các thành viên trong nhóm, tăng khả năng sử dụng các công cụ hỗ trợ làm việc nhóm như Github.
+\item Tăng cường trao đổi online, tạo môi trường làm việc tích cực
+\end{itemize}
 \chapter{Tài liệu tham khảo}
 
 \begin{verbatim}
 [+] Slide Học Máy TS. Thân Quang Khoát
 [+] Opencourse in Mit-SVM 
 [+]  http://www.svm-tutorial.com/2016/09/unconstrained-minimization/
-[+] https://ongxuanhong.wordpress.com/2015/09/19/support-vector-machine-svm-hoi-gi-dap-nay/
-[+] http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC 
+[+] https://ongxuanhong.wordpress.com/2015/09/19/support-vector-machine
+-svm-hoi-gi-dap-nay/
+[+] http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.
+html#sklearn.svm.SVC 
 [+] SVMs for Histogram-Based Image Classification
 Olivier Chapelle, Patrick Haffner and Vladimir Vapnik
 [+] http://docs.opencv.org/3.1.0/d1/db7/tutorial_py_histogram_begins.html
