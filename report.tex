@@ -262,13 +262,17 @@ model.add(Dense(num_classes, activation='softmax'))
 \end{itemize}
 \item[-] Traning:
 \begin{lstlisting}
-#have 5 bacth 
-#read batch 1
-fo = open("data_batch_1", 'rb')
-dict = cPickle.load(fo)
-da=np.array(dict.get('data'))
-lb=np.array(dict.get('labels'))
-fo.close()
+epochs = 25
+lrate = 0.01
+decay = lrate/epochs
+sgd = SGD(lr=lrate, momentum=0.9, decay=decay, 
+		nesterov=False)
+model.compile(loss='categorical_crossentropy', 
+			optimizer=sgd, metrics=['accuracy'])
+print(model.summary())
+# Fit the model
+model.fit(X_train,y_train,validation_data=(X_test, y_test), 
+			nb_epoch=epochs, batch_size=32)
 \end{lstlisting}
 \begin{itemize}
 \item[•] Số epoch thực hiện 25
@@ -281,6 +285,7 @@ $L = -\frac{1}{N}\Sigma_{i=1}^{N}\big[y_i\log y_i + (1-\tilde{y_i})\big]$ (c là
 \end{itemize}
 \end{itemize}
 \subsubsection{Kết quả}
+Độ chính xác: 71.26\%
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width =1.0 \textwidth]{testImg.png}
