@@ -79,9 +79,34 @@ Chúng em xin chân thành cảm ơn Thầy giáo, TS. Thân Quang Khoát đã t
 
 \listoffigures
 \chapter{Mở đầu}
-\chapter{Giới thiệu bài toán}
+Học máy là lập trình cho máy tính để tối ưu hóa các tiêu chí hiệu suất, sử dụng dữ liệu mẫu hoặc các kinh nghiệm từ quá khứ. Hiện nay đã có nhiều ứng dụng của Học máy thành công trên nhiều mảng khác nhau: Các hệ thống đã được đưa vào thương mại hóa giải quyết vấn đề nhận diện giọng nói và chữ viết; Các công ty bán lẻ phân tích dữ liệu bán hàng từ quá khứ để học hành vi của khách hàng, để từ đó tăng cường, cải thiện việc quản lý các mối quan hệ với khách hàng; Robot học để tối ưu hành vi, với mục đích là hoàn thành nhiệm vụ với lượng tài nguyên sử dụng nhỏ nhất… \\
+
+Cùng với những thành tựu tiên tiến trong công nghệ về máy tính, chúng ta đã có khả năng lưu trữ và xử lý lượng lớn dữ liệu, cũng như truy cập chúng từ khoảng cách lớn về địa lý thông qua mạng máy tính. Lượng dữ liệu được lưu trữ đó chỉ trở nên hữu dụng khi nó được phân tích và đưa về các thông tin ta có thể sử dụng được, nhờ các ứng dụng về xử lý dữ liệu lớn của Học máy. Học máy đang là một lĩnh vực đầy tiềm năng nghiên cứu, mang lại nhiều lợi ích mang tính đột phá, có ý nghĩa lớn về cả mặt lý thuyết và ứng dụng. \\
+
+Đề tài của chúng em trình bày những tìm hiểu về một khía cạnh của Học máy: Phân loại hình ảnh. Trong đó, chúng em sử dụng các phương pháp đặc trưng trong học máy để giải quyết bài toán phân loại hình ảnh với bộ dữ liệu cho trước, từ đó so sánh, đánh giá và đưa ra kết luận cho bài toán. 
+\chapter{Mô tả bài toán}
 \section{Giới thiệu bài toán}
+Với bài toán phân loại hình ảnh, một bức ảnh được phân loại dựa theo nội dung về mặt hình ảnh. Đây là bài toán học có giám sát: Toàn bộ các bức ảnh đều được gán nhãn. \\
+
+Mục đích của quá trình phân loại là đưa ra nhãn lớp của hình ảnh đưa vào. Ta xét với bộ dữ liệu chứa các ảnh kích cỡ 32x32 pixel, với 3 kênh màu: Đỏ, xanh lá cây, xanh dương. Mỗi hình ảnh được dãn ra thành một vector cột nhiều chiều, ta có thể coi mỗi hình ảnh như một điểm trong không gian 3072 chiều (32x32x3 pixel). Ta có thể coi toàn bộ tập dữ liệu là tập các điểm được gán nhãn. 
+
+\begin{itemize}
+\item Đầu vào: Bộ dữ liệu ảnh training đã được mã hóa và gán nhãn
+\end{itemize} 
+\begin{itemize}
+\item Đầu ra: Với một mô hình đã học và đưa vào thử nghiệm trên tập test, đưa ra nhãn lớp tương ứng với hình ảnh đầu vào.
+\end{itemize}
 \section{Bộ dữ liệu sử dụng}
+Bộ dữ liệu CYFAR-10 chứa 60000 hình ảnh màu 32x32 trong 10 nhãn lớp, với 6000 hình ảnh mỗi lớp. Có tổng cộng 50000 hình ảnh học và 10000 hình ảnh để thử nghiệm.\\
+
+Bộ dữ liệu được chia thành 5 batch để học, mỗi batch có 10000 hình ảnh. Bộ thử nghiệm chứa chính xác 1000 bức ảnh từ mỗi lớp. Các batch để học chứa số ảnh còn lại, xếp theo thứ tự ngẫu nhiên, do đó có thể có một vài batch chứa nhiều hình ảnh của một lớp hơn batch khác. Cộng các batch học lại, có chính xác 5000 hình ảnh từ mỗi lớp.
+\section{Các phương pháp thử nghiệm}
+\begin{itemize}
+\item K-NN: Học dựa trên láng giềng gần nhất
+\item Neural Network: Mạng nơ ron
+\item Convolutional Neural Networks
+\item Support Vector Machine: Máy vector hỗ trợ
+\end{itemize}
 \chapter{Các phương pháp sử dụng và kết quả thực nghiệm}
 \section{KNN}
 \subsection{Cơ sở lý thuyết}
